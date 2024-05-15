@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website Status Checker</title>
+  <script>
+    async function checkWebsiteStatus() {
+      try {
+        const response = await fetch('/api/checkWebsite');
+        const data = await response.text();
+        console.log(data);
+      } catch (error) {
+        console.error('Error calling the serverless function:', error);
+      } finally {
+        // Schedule the next check with a randomized interval
+        const randomInterval = Math.floor(Math.random() * (90 - 50 + 1) + 50) * 1000;
+        setTimeout(checkWebsiteStatus, randomInterval);
+      }
+    }
+
+    // Initial check
+    checkWebsiteStatus();
+  </script>
+</head>
+<body>
+  <h1>Website Status Checker</h1>
+  <p>The status of the website is being monitored at random intervals between 50 and 90 seconds.</p>
+</body>
+</html>
